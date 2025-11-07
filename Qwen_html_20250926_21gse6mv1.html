@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美食天堂 - 探索世界美味</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff8f0 0%, #ffebe6 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 导航栏样式 */
+        .navbar {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: #ffd166;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* 展示区样式 */
+        .hero {
+            background: linear-gradient(rgba(255, 107, 107, 0.8), rgba(255, 142, 83, 0.8)), 
+                        url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ffd166;
+            color: #ff6b6b;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 3px solid #ffd166;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #ffd166;
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 209, 102, 0.4);
+        }
+
+        /* 美食展示区 */
+        .food-showcase {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .food-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+        }
+
+        .food-image {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .food-info {
+            padding: 1.5rem;
+        }
+
+        .food-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #ff6b6b;
+        }
+
+        .food-info p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .food-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ff8e53;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            color: #ff6b6b;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            color: white;
+            padding: 3rem 5%;
+            margin-top: 5rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffd166;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #ff6b6b;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ffd166;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #444;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #ff6b6b;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #666;
+            color: #aaa;
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-utensils"></i>
+                美食天堂
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#menu">菜单</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 展示区 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>探索世界美味</h1>
+            <p>从街头小吃到米其林餐厅，发现属于你的美食之旅</p>
+            <a href="#menu" class="btn">立即探索</a>
+        </div>
+    </section>
+
+    <!-- 美食展示区 -->
+    <section class="food-showcase" id="menu">
+        <div class="section-title">
+            <h2>精选美食</h2>
+            <p>来自世界各地的美味佳肴，满足你的味蕾需求</p>
+        </div>
+        <div class="food-grid">
+            <!-- 美食卡片 1 -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="意大利披萨" class="food-image">
+                <div class="food-info">
+                    <h3>意大利玛格丽特披萨</h3>
+                    <p>经典意大利风味，新鲜番茄、马苏里拉奶酪和罗勒叶的完美结合</p>
+                    <div class="food-meta">
+                        <span class="price">¥88</span>
+                        <span>4.8⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 美食卡片 2 -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="寿司" class="food-image">
+                <div class="food-info">
+                    <h3>日式三文鱼寿司</h3>
+                    <p>新鲜三文鱼搭配醋饭，传统日式料理的精致呈现</p>
+                    <div class="food-meta">
+                        <span class="price">¥68</span>
+                        <span>4.9⭐</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 美食卡片 3 -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="汉堡" class="food-image">
+                <div class="food-info">
+                    <h3>美式牛肉汉堡</h3>
+                    <p>多汁牛肉饼配焦糖洋葱，搭配新鲜蔬菜和特制酱料</p>
+                    <div class="food-meta">
+                        <span class="price">¥58</span>
+                        <span>4.7⭐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>美食天堂</h3>
+                <p>致力于为您带来世界各地最美味的料理体验，让每一次用餐都成为难忘的回忆。</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-wechat"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#menu">菜单</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                    <li><a href="#">隐私政策</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>联系我们</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> 北京市朝阳区美食街123号</li>
+                    <li><i class="fas fa-phone"></i> +86 138-0013-8000</li>
+                    <li><i class="fas fa-envelope"></i> info@foodheaven.com</li>
+                    <li><i class="fas fa-clock"></i> 营业时间: 10:00 - 22:00</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2024 美食天堂. 保留所有权利.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+<script>
+ window.difyChatbotConfig = {
+  token: 'pIpsyGmL5eXCBB7z',
+  baseUrl: 'http://localhost',
+  inputs: {
+    // You can define the inputs from the Start node here
+    // key is the variable name
+    // e.g.
+    // name: "NAME"
+  },
+  systemVariables: {
+    // user_id: 'YOU CAN DEFINE USER ID HERE',
+    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+  },
+  userVariables: {
+    // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+    // name: 'YOU CAN DEFINE USER NAME HERE',
+  },
+ }
+</script>
+<script
+ src="http://localhost/embed.min.js"
+ id="pIpsyGmL5eXCBB7z"
+ defer>
+</script>
+<style>
+  #dify-chatbot-bubble-button {
+    background-color: #1C64F2 !important;
+  }
+  #dify-chatbot-bubble-window {
+    width: 24rem !important;
+    height: 40rem !important;
+  }
+</style>
